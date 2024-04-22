@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Añadir Libro</title>
+    <!-- <link rel="stylesheet" href="./styles.css"> -->
+</head>
+
+<body>
+    <h1>Añadir un nuevo libro</h1>
+    <form id="book-form">
+        <label for="titulo">Título:</label><br>
+        <input type="text" id="titulo" name="titulo"><br>
+        <label for="autor">Autor:</label><br>
+        <input type="text" id="autor" name="autor"><br>
+        <label for="año">Año:</label><br>
+        <input type="number" id="año" name="año"><br>
+        <input type="submit" value="Añadir Libro">
+    </form>
+
+    <div id="libros"></div>
+
+    <script>
+        document.getElementById('book-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            var titulo = document.getElementById('titulo').value;
+            var autor = document.getElementById('autor').value;
+            var año = document.getElementById('año').value;
+            var data = { titulo: titulo, autor: autor, año: año };
+            fetch('http://localhost:5000/libros', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(response => response.json())
+                .then(data => console.log(data))
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        });
+
+        
+    </script>
+</body>
+
+</html>
